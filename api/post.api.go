@@ -1,12 +1,15 @@
-package main
+package api
 
 import (
+	"api/config"
 	"api/db"
 	"context"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
+
+var Client = config.Client
 
 type PostResponse struct {
 	Status  int            `json:"status"`
@@ -15,7 +18,7 @@ type PostResponse struct {
 	HasMore bool           `json:"hasMore"`
 }
 
-var deletePost = func(c *fiber.Ctx) error {
+var DeletePost = func(c *fiber.Ctx) error {
 	ctx := context.Background()
 	id := c.Params("id")
 
@@ -30,7 +33,7 @@ var deletePost = func(c *fiber.Ctx) error {
 	})
 }
 
-func updatePost(c *fiber.Ctx) error {
+func UpdatePost(c *fiber.Ctx) error {
 	id := c.Params("id")
 	ctx := context.Background()
 	newData := struct {
@@ -51,7 +54,7 @@ func updatePost(c *fiber.Ctx) error {
 	return c.Status(200).JSON(updateDoc)
 }
 
-func getPost(c *fiber.Ctx) error {
+func GetPost(c *fiber.Ctx) error {
 	ctx := context.Background()
 	page, err := strconv.Atoi(c.Query("page"))
 	limit, err := strconv.Atoi(c.Query("limit"))
@@ -76,7 +79,7 @@ func getPost(c *fiber.Ctx) error {
 	return c.JSON(res)
 }
 
-func getById(c *fiber.Ctx) error {
+func GetById(c *fiber.Ctx) error {
 	id := c.Query("id")
 	ctx := context.Background()
 	row, err := Client.Post.FindUnique(
@@ -88,7 +91,7 @@ func getById(c *fiber.Ctx) error {
 	return c.JSON(row)
 }
 
-func createPost(c *fiber.Ctx) error {
+func CreatePost(c *fiber.Ctx) error {
 	p := struct {
 		Title string `json:"title"`
 		Body  string `json:"body"`

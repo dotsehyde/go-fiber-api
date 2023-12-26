@@ -1,7 +1,8 @@
 datasource db {
     // could be postgresql or mysql
-    provider = "mysql"
-    url      = env("DATABASE_URL") //"file:dev.db"
+    provider = "sqlite"
+    url      = "file:dev.db"
+    // env("DATABASE_URL") //"file:dev.db"
 }
 
 generator db {

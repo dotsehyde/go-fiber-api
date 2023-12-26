@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api/routes"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -13,19 +14,7 @@ func main() {
 	app.Use(logger.New())
 	// engine := django.New("./views", ".django")
 	//POST APIs
-	app.Post("/create", createPost)
-	app.Get("/get", getPost)
-	app.Get("/getById", getById)
-	app.Patch("/update/:id", updatePost)
-	app.Delete("/del/:id", deletePost)
+	routes.RegisterRoutes(app)
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		// Render index
-		return c.SendFile("./public/index.html", true)
-		// return c.Render("index", fiber.Map{
-		// 	"Title": "Hello, World!",
-		// })
-	})
-
-	log.Fatal(app.Listen(":8000"))
+	log.Fatal(app.Listen(":8500"))
 }

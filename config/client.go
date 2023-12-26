@@ -1,6 +1,4 @@
-// client.go
-
-package main
+package config
 
 import (
 	"api/db" // Replace with the actual import path
